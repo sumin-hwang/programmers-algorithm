@@ -1,0 +1,13 @@
+function solution(s) {
+    var answer = '';
+    var arr = s.split(" ");
+    arr = arr.map(c => c = parseInt(c));
+    const max = Math.max(...arr);
+    const min = Math.min(...arr);
+    
+    answer += min + " " + max;
+    
+    
+    
+    return answer;
+}
