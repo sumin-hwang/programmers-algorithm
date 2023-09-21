@@ -57,3 +57,18 @@ function dfs2 (graph, v, visited){
     }
 }
   
+
+function solution(k, dg){
+    let answer = [];
+    let visited = Array(dg.length).fill(false);
+
+    function dfs(count, k){
+        answer.push(count);
+
+        for(let i =0; i < dg.length; i++){
+            let curr = dg[i][0];
+
+            if(k >)
+        }
+    }
+}
