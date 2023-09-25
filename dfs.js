@@ -32,43 +32,31 @@ const DFS = (graph, startNode) => {
 
 console.log(DFS(graph, "A"));
 
-const dfs2visited = Array(6).fill(false);
-const graph2 = [[1, 2, 3], [0, 6], [0], [0, 4, 5], [3], [3], [1]];
+// 재귀를 사용한 DFS 구현
 
-function dfs2(graph, v, visited) {
-    // 현재 노드를 방문 처리
-    visited[v] = true;
+const dfs = (graph1, v, visited) => {
+    visited[v] = true; // 시작노드 방문처리
     console.log(v);
-  
-    // 현재 노드와 연결된 다른 노드를 재귀적으로 방문
-    for (let node of graph[v]) {
-      if (!visited[node]) {
-        dfs(graph, node, visited);
-      }
-    }
-  }
-  
 
-function dfs2 (graph, v, visited){
-    visited[v] = true;
-
-    for(let node of graph[v]){
-        dfs(graph, node, visited);
-    }
-}
-  
-
-function solution(k, dg){
-    let answer = [];
-    let visited = Array(dg.length).fill(false);
-
-    function dfs(count, k){
-        answer.push(count);
-
-        for(let i =0; i < dg.length; i++){
-            let curr = dg[i][0];
-
-            if(k >)
+    for(const cur of graph1[v]){
+        if(!visited[cur]){
+            dfs(graph1, cur, visited);
         }
     }
 }
+
+let graph1 = [
+    [],
+    [2, 3, 8],
+    [1, 7],
+    [1, 4, 5],
+    [3, 5],
+    [3, 4],
+    [7],
+    [2, 6, 8],
+    [1, 7],
+  ]
+  
+  let visited = [...Array(9).fill(false)];
+  
+  dfs(graph, 1, visited);

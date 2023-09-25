@@ -11,6 +11,25 @@ const graph = {
     J: ["I"]
 };
 
+// const BFS = (graph, startNode) => {
+//     const visited = [];
+//     let needVisit = [];
+
+//     needVisit.push(startNode);
+
+//     while(needVisit.length !== 0){
+//         const node = needVisit.shift();
+
+//         if(!visited.includes(node)){
+//             visited.push(node);
+//             needVisit = [...needVisit, ...graph[node]];
+//         }
+//     }
+//     return visited;
+// }
+
+// console.log(BFS(graph, "A"));
+
 const BFS = (graph, startNode) => {
     const visited = [];
     let needVisit = [];
@@ -25,7 +44,7 @@ const BFS = (graph, startNode) => {
             needVisit = [...needVisit, ...graph[node]];
         }
     }
+
     return visited;
 }
 
-console.log(BFS(graph, "A"));
