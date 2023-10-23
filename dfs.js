@@ -60,3 +60,22 @@ let graph1 = [
   let visited = [...Array(9).fill(false)];
   
   dfs(graph, 1, visited);
+
+
+
+const bfs = (graph, start, visited) => {
+    const q = [];
+    q.push(start);
+    visited[start] = true;
+
+    while(q.length !== 0){
+        const v = q.shift();
+
+        for(const cur of graph[v]){
+            if(!visited[cur]){
+                q.push(cur);
+                visited[cur] = true;
+            }
+        }
+    }
+}
