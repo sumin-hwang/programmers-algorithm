@@ -1,13 +1,19 @@
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split(" ");
 
-let hour = input[0];
-let min = input[1];
+// let fs = require('fs');
+// let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
-if(min >= 45){
-    min -= 45;    
-}else{
-    min = 60 + (min - 45);
-    hour -= 1;
-}
+//let input = require('fs').readFileSync('/dev/stdin').toString().trim()
 
-console.log(hour, min);
+
+let cWord = ['c=', 'c-', 'dz=', 'd-', 'lj', 'nj', 's=', 'z='];
+let word = input[0];
+let cnt =0;
+
+for(let i =0; i < cWord.length; i++){
+    if(word.includes(cWord[i])){
+        word = word.replace(cWord[i], '#');
+    }
+}  
+
+console.log(word.length);
