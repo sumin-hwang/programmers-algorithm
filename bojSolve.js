@@ -1,19 +1,17 @@
-let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split(" ");
-
 // let fs = require('fs');
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
 //let input = require('fs').readFileSync('/dev/stdin').toString().trim()
 
+// const fs = require('fs');
+// const input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
-let cWord = ['c=', 'c-', 'dz=', 'd-', 'lj', 'nj', 's=', 'z='];
-let word = input[0];
-let cnt =0;
+// const a = require("fs").readFileSync("/dev/stdin")
 
-for(let i =0; i < cWord.length; i++){
-    if(word.includes(cWord[i])){
-        word = word.replace(cWord[i], '#');
-    }
-}  
+let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 
-console.log(word.length);
+const num = input[0];
+const arr = input[1].split(" ");
+const v = input[2];
+
+console.log(arr.filter(c => c ===v).length);

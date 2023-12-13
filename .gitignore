@@ -55,3 +55,4 @@ node_modules/nunjucks/src/runtime.js
 node_modules/nunjucks/src/tests.js
 node_modules/nunjucks/src/transformer.js
 node_modules/nunjucks/src/web-loaders.js
+bojSolve.js
