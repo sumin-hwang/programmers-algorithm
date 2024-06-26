@@ -8,10 +8,17 @@
 
 // const a = require("fs").readFileSync("/dev/stdin")
 
-let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
+//배열을 받아서 숫자로 저장하기
+let inputNumberNL =require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => Number(c));
+let inputStringNL = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
+let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split(' ').map(c => Number(c));
+let inputNewLine = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n');
 
-const num = input[0];
-const arr = input[1].split(" ");
-const v = input[2];
+let [line1, line2] = inputStringNL;
 
-console.log(arr.filter(c => c ===v).length);
+line1 = line1.split(' ').map(c => Number(c));
+line2 = line2.split(' ').map(c => Number(c));
+
+const [N, X] = line1;
+
+console.log(line2.filter(c => c < X).join(' '));
