@@ -14,8 +14,28 @@ let inputStringNL = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algor
 let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split(' ').map(c => Number(c));
 let inputNewLine = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n');
 
-const max = Math.max(...inputNumberNL);
-const index = inputNumberNL.findIndex(c => c=== max);
+const [N, M] = inputNewLine[0].split(' ').map(c => Number(c));
 
-console.log(max);
-console.log(index + 1);
+const arr = new Array(N).fill(0);
+
+for(let i =0; i <= M; i++){
+    let [start, end, k] = inputNewLine[i].split(" ").map(el => Number(el));
+    for(start;start<=end; start++){
+        arr[start-1] = k;
+    }
+}
+
+console.log(arr.map(c => c));
+
+
+
+// const arr = new Array(N).fill(0);
+
+// for(let i =1; i <= M; i++){
+//     let [start, end, k] = input[i].split(" ").map(el => Number(el));
+//     for(start; start <= end; start++){
+//         arr[start -1] = k;
+//     }
+// }
+
+// console.log(arr);
