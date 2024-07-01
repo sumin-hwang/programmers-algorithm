@@ -15,17 +15,20 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let inputNewLine = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n');
 
 const [N, M] = inputNewLine[0].split(' ').map(c => Number(c));
+let arr = new Array(N).fill(0);
+arr = arr.map((c,i) => c =( i +1));
 
-const arr = new Array(N).fill(0);
+for(let i = 1; i <= M; i++){
+    let [x, y] = inputNewLine[i].split(" ").map(c => Number(c));
 
-for(let i =0; i <= M; i++){
-    let [start, end, k] = inputNewLine[i].split(" ").map(el => Number(el));
-    for(start;start<=end; start++){
-        arr[start-1] = k;
-    }
+    let temp = arr[x-1];
+    arr[x-1] = arr[y-1];
+    arr[y-1] = temp;
 }
 
-console.log(arr.map(c => c));
+console.log(arr.join(" "));
+
+
 
 
 
