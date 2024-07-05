@@ -16,8 +16,25 @@ let inputStringNL = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algor
 let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split(' ').map(c => Number(c));
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n');
 
-const [N, M] = input[0].split(" ");
-const reverseN = N.split("").reverse().join("");
-const reverseM = M.split("").reverse().join("");
+const word = input[0].toUpperCase();
+let obj = {};
 
-console.log(Number(reverseN) > Number(reverseM) ? reverseN : reverseM);
+for(let i =0; i < word.length; i++){
+    if(Object.keys(obj).includes(word[i])){
+        obj[word[i]]++;
+    }else{
+        obj[word[i]] = 1;
+    }
+}
+
+let objValue = Object.values(obj);
+let max = Math.max(...objValue);
+let cnt = objValue.filter(c => c === max);
+let idx = objValue.findIndex(c => c === max);
+
+if(cnt.length > 1){
+    console.log('?')
+}else{
+    let keyValue = Object.keys(obj);
+    console.log(keyValue[idx]);
+}
