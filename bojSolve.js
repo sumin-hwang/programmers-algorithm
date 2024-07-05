@@ -15,26 +15,18 @@ let inputNumberNL =require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algori
 let inputStringNL = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split(' ').map(c => Number(c));
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n');
+let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const word = input[0].toUpperCase();
-let obj = {};
+let maxArr = [];
 
-for(let i =0; i < word.length; i++){
-    if(Object.keys(obj).includes(word[i])){
-        obj[word[i]]++;
-    }else{
-        obj[word[i]] = 1;
-    }
+for(let i = 0; i < 9; i++){
+    maxArr[i] = Math.max(...input1[i]);
 }
 
-let objValue = Object.values(obj);
-let max = Math.max(...objValue);
-let cnt = objValue.filter(c => c === max);
-let idx = objValue.findIndex(c => c === max);
+let max = Math.max(...maxArr);
+let rowIdx = maxArr.findIndex(c => c === max);
+let colIdx = input1[rowIdx].findIndex( c=> c===max);
 
-if(cnt.length > 1){
-    console.log('?')
-}else{
-    let keyValue = Object.keys(obj);
-    console.log(keyValue[idx]);
-}
+
+console.log(max);
+console.log( rowIdx +1, colIdx +1);
