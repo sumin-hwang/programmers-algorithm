@@ -17,7 +17,8 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-// let cnt = inputSpaceNumber[0];
+const [min, max] = input.map(c => Number(c));
+
 const isPrime = (n) => {
     if( n===1){
         return false;
@@ -31,9 +32,17 @@ const isPrime = (n) => {
 
     return true;
 }
+let arr = [];
 
-// const input123 = require('fs').readFileSync('/devs/stdin').toString().trim();
+for(let i = min; i <=max; i++){
+   if(isPrime(i)){
+    arr.push(i);
+   }
+}
 
-const[c1, nums] = input.split("\n");
-
-console.log(nums.split(" ").filter(x => isPrime(x)).length);
+if(arr.length > 0){
+    console.log(arr.reduce((acc,cur) => {return acc+cur;}, 0));
+    console.log(Math.min(...arr));
+}else{
+    console.log(-1);
+}
