@@ -1,7 +1,7 @@
 // let fs = require('fs');
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
-const { c } = require('tar');
+
 
 //let input = require('fs').readFileSync('/dev/stdin').toString().trim()
 
@@ -17,32 +17,18 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [min, max] = input.map(c => Number(c));
+const N = Number(input);
+let cnt = 0;
+let k = 666;
 
-const isPrime = (n) => {
-    if( n===1){
-        return false;
-    }
+while(N <= 10000){
+  if(k.toString().includes('666')){
+    cnt += 1;
+  }
 
-    for(let i =2; i <= Math.sqrt(n);i++){
-        if(n%i===0){
-            return false;
-        }
-    }
-
-    return true;
-}
-let arr = [];
-
-for(let i = min; i <=max; i++){
-   if(isPrime(i)){
-    arr.push(i);
-   }
-}
-
-if(arr.length > 0){
-    console.log(arr.reduce((acc,cur) => {return acc+cur;}, 0));
-    console.log(Math.min(...arr));
-}else{
-    console.log(-1);
+  if(cnt === N){
+    console.log(k);
+    break;
+  }
+  k = k +1;
 }
