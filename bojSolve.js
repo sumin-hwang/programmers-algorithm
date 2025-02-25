@@ -2,6 +2,9 @@
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
 
+// const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
+
+
 
 //let input = require('fs').readFileSync('/dev/stdin').toString().trim()
 
@@ -17,18 +20,27 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = Number(input);
-let cnt = 0;
-let k = 666;
+const N = input[0];
+const card = input[1].split(" ").map(c => Number(c));
+const quiz = input[3].split(" ").map(c => Number(c));
+let answer = [];
 
-while(N <= 10000){
-  if(k.toString().includes('666')){
-    cnt += 1;
-  }
+var map = new Map();
 
-  if(cnt === N){
-    console.log(k);
-    break;
-  }
-  k = k +1;
+for(let i = 0; i < N; i++){
+    if (!map.has(card[i])){
+        map.set(card[i],1)
+    }else{
+        map.set(card[i], map.get(card[i]) + 1)
+    }
 }
+
+for(let i =0; i < quiz.length; i++){
+    if(map.has(quiz[i])){
+        answer.push(map.get(quiz[i]));
+    }else{
+        answer.push(0);
+    }
+}
+
+console.log(answer.join(" "));
