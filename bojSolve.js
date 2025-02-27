@@ -20,27 +20,12 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = input[0];
-const card = input[1].split(" ").map(c => Number(c));
-const quiz = input[3].split(" ").map(c => Number(c));
-let answer = [];
+input.shift();
 
-var map = new Map();
+const setA = new Set(input[0].split(" "));
+const setB = new Set(input[1].split(" "));
 
-for(let i = 0; i < N; i++){
-    if (!map.has(card[i])){
-        map.set(card[i],1)
-    }else{
-        map.set(card[i], map.get(card[i]) + 1)
-    }
-}
+const interSize = [...setA].filter(c => setB.has(c)).length;
+const union = [...setA, ...setB].length;
 
-for(let i =0; i < quiz.length; i++){
-    if(map.has(quiz[i])){
-        answer.push(map.get(quiz[i]));
-    }else{
-        answer.push(0);
-    }
-}
-
-console.log(answer.join(" "));
+console.log(union - interSize *2);
