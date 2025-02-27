@@ -20,12 +20,13 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-input.shift();
+let str = input[0];
+let set1 = new Set();
 
-const setA = new Set(input[0].split(" "));
-const setB = new Set(input[1].split(" "));
+for(let i =0; i < str.length; i++){
+    for(let j = i; j < str.length; j++){
+        set1.add(str.slice(i, j+1))
+    }
+}
 
-const interSize = [...setA].filter(c => setB.has(c)).length;
-const union = [...setA, ...setB].length;
-
-console.log(union - interSize *2);
+console.log(set1.size);
