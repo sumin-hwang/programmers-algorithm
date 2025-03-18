@@ -20,13 +20,15 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-let str = input[0];
-let set1 = new Set();
+const N = input.shift();
+let answer = [];
 
-for(let i =0; i < str.length; i++){
-    for(let j = i; j < str.length; j++){
-        set1.add(str.slice(i, j+1))
-    }
+const gcd = (a,b) => a%b === 0 ? b : gcd(b, a%b);
+
+for(let i = 0; i < N; i++){
+    let [num1, num2] = input[i].split(" ").map(c => Number(c));
+    let temp = gcd(num1, num2);
+    answer.push(num1 * num2 / temp);
 }
 
-console.log(set1.size);
+answer.map(c => console.log(c));
