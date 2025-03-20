@@ -20,15 +20,16 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = input.shift();
-let answer = [];
+let [A1, B1] = input[0].split(" ").map(c => Number(c));
+let [A2, B2] = input[1].split(" ").map(c => Number(c));
 
-const gcd = (a,b) => a%b === 0 ? b : gcd(b, a%b);
+const gcd = (a, b) => a%b === 0 ? b : gcd(b, a%b);
+const lcm = B1*B2 / gcd(B1, B2);
+const num = A1 * lcm/B1 + A2 * lcm/B2;
 
-for(let i = 0; i < N; i++){
-    let [num1, num2] = input[i].split(" ").map(c => Number(c));
-    let temp = gcd(num1, num2);
-    answer.push(num1 * num2 / temp);
+if(gcd(lcm, num) === 1){
+    console.log(num, lcm);
+}else{
+    let tempgcd = gcd(lcm, num);
+    console.log(Math.floor(num/tempgcd), Math.floor(lcm/tempgcd));
 }
-
-answer.map(c => console.log(c));
