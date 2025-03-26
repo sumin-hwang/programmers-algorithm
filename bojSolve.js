@@ -20,32 +20,36 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = input[0];
-let answer = 0;
+const N = input.pop();
+input = input.map(c => Number(c));
 
 const isPrime = (n) => {
-    let temp = 0;
-    if(n < 2){
-        temp++;
+    if( n < 2 ) {
+        return false;
     }
 
-    for(let i =0; i <= Math.sqrt(n); i++){
-        if(n%i=== 0){
-            temp++;
+    for(let i =2; i <= Math.sqrt(n); i++){
+        if(n%i==0){
+            return false;
         }
     }
 
-    return temp;
+    return true;
 }
 
-for(let i = 4; i <= N; i++){
-    if(isPrime(i) === 3){
-        answer++;
+let arr = [];
+for(el of input){
+    if(el <= 123456){
+        let temp = 0;
+        for(let i = el + 1; i <= el * 2; i++){
+            if(isPrime(i)){
+                temp++;
+            }
+        }
+        arr.push(temp);
     }
+    
 }
 
-if(N <4){
-    console.log(1);
-}else{
-    console.log(answer);
-}
+
+arr.map(c => console.log(c));
