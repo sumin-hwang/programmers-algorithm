@@ -1,6 +1,8 @@
-5
-ENTER
-a
-ENTER
-ENTER
-b
+7 4
+apple
+ant
+sand
+apple
+append
+sand
+sand
