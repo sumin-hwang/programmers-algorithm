@@ -1,8 +1,1 @@
-7 4
-apple
-ant
-sand
-apple
-append
-sand
-sand
+10
