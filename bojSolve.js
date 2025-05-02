@@ -24,15 +24,30 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const num = Number(input.shift());
+const [N, M] = input[0].split(" ").map(c => Number(c));
+let visited = new Array(N + 1).fill(false);
+let result = '';
+let output = [];
 
-function factorial(n) {
 
-    if(n===1 || n === 0){
-        return 1;
-    }else{
-        return n * factorial(n-1);
+function backtracking(num, start){
+  if(num === M){
+    result+= `${output.join(" ")}\n`;
+    return;
+  }
+
+  for(let i = start; i <= N; i++){
+    if(visited[i] === true){
+      continue;
     }
+
+    visited[i] = true;
+    output.push(i);
+    backtracking(num + 1, i);
+    output.pop();
+    visited[i] = false;
+  }
 }
 
-console.log(factorial(num));
+backtracking(0, 1);
+console.log(result);
