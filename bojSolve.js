@@ -1,6 +1,8 @@
 // let fs = require('fs');
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
+const { c } = require('tar');
+
 // const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
 
 // const input = require("fs")
@@ -24,30 +26,21 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, M] = input[0].split(" ").map(c => Number(c));
-let visited = new Array(N + 1).fill(false);
-let result = '';
-let output = [];
+const N = Number(input.shift());
 
+const dp = (num) => {
+  let arr = new Array(num+1).fill(0);
 
-function backtracking(num, start){
-  if(num === M){
-    result+= `${output.join(" ")}\n`;
-    return;
+  arr[1] = 1;
+  arr[2] = 2;
+  arr[3] = 3;
+  arr[4] = 5;
+
+  for(let i = 4; i <= num; i++){
+    arr[i] = arr[i-1] + arr[i-3];
   }
 
-  for(let i = start; i <= N; i++){
-    if(visited[i] === true){
-      continue;
-    }
-
-    visited[i] = true;
-    output.push(i);
-    backtracking(num + 1, i);
-    output.pop();
-    visited[i] = false;
-  }
+  return arr[num];
 }
 
-backtracking(0, 1);
-console.log(result);
+console.log(dp(N));
