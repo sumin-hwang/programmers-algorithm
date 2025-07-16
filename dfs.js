@@ -12,15 +12,15 @@ const graph = {
 };
 
 const DFS = (graph, startNode) => {
-    const visited = [];
-    let needVisit = [];
+    const visited = []; // 탐색을 마친 노드
+    let needVisit = []; // 탐색해야 할 노드
 
-    needVisit.push(startNode);
+    needVisit.push(startNode); // 노드 탐색 시작
 
-    while(needVisit.length !== 0){
-        const node = needVisit.shift();
+    while(needVisit.length !== 0){ // 탐색해야 할 노드가 남아있다면
+        const node = needVisit.shift(); // queue이므로 선입선출, shift()
 
-        if(!visited.includes(node)){
+        if(!visited.includes(node)){ // 해당 노드가 탐색 된 적이 없다면,,
             visited.push(node);
             needVisit = [...graph[node], ...needVisit];
         }
@@ -43,6 +43,25 @@ const dfs = (graph1, v, visited) => {
             dfs(graph1, cur, visited);
         }
     }
+}
+
+function dfs_stack(graph, start, visited) {
+  const stack = [];
+  stack.push(start);
+
+  while (stack.length) {
+    let v = stack.pop();
+    if (!visited[v]) {
+      console.log(v);
+      visited[v] = true;
+
+      for (let node of graph[v]) {
+        if (!visited[node]) {
+          stack.push(node);
+        }
+      }
+    }
+  }
 }
 
 let graph1 = [
@@ -69,13 +88,85 @@ const bfs = (graph, start, visited) => {
     visited[start] = true;
 
     while(q.length !== 0){
-        const v = q.shift();
+        const v = q.shift(); // 현재 노드 꺼냄
 
-        for(const cur of graph[v]){
-            if(!visited[cur]){
-                q.push(cur);
-                visited[cur] = true;
+        for(const next of graph[v]){ // 인접 노드 순환
+            if(!visited[next]){
+                q.push(next); // 방문하지 않은 애는 추가
+                visited[next] = true; // 방문 표시
             }
         }
     }
+}
+
+const binarySearch = (arr, target, start, end) => {
+  if (start > end) return -1; //원소가 존재하지 않는 경우
+
+  const mid = ~~((start + end) / 2);
+  if (target === arr[mid]) 
+    return mid;
+  else if (target < arr[mid]) 
+    return binarySearch(arr, target, start, mid - 1);
+  else 
+  return binarySearch(arr, target, mid + 1, end);
+};
+
+const binarySearch2 = (arr, target, start, end) => {
+  while (start <= end) {
+    const mid = ~~((start + end) / 2);
+    if (target === arr[mid]) 
+        return mid;
+    else if (target < arr[mid]) 
+        end = mid - 1;
+    else 
+    start = mid + 1;
+  }
+
+  return -1;
+};
+
+
+const testdfs = (graph, v, visited) => {
+    visited[v] = true;
+    console.log(v);
+
+    for(const cur of graph[v]){
+        if(!visited[cur]){
+            dfs
+        }
+    }
+}
+
+const bfs2 = (graph,v,visited) => {
+  const q = [];
+  q.push(start);
+  visited[start] = true;
+
+  while(q.length){
+    const v= q.shift();
+
+    for(const next of graph[v]){
+      if(!visited[next]){
+        q.push(next);
+        visited[next] = true;
+      }
+    }
+  }
+}
+
+const b2 = (graph,v,visited) => {
+  const q = [];
+  q.push(start);
+  visited[start] = true;
+
+  while(q.length){
+    const v = q.shift();
+
+    for(const next of graph[v]){
+      if(!visited[next]){
+        q.push(next);
+        visited[next] = triggerAsyncId;
+      }
+    }
+  }
 }

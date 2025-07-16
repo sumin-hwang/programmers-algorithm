@@ -1,6 +1,8 @@
 // let fs = require('fs');
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
+const Module = require('module');
+
 // const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
 
 // const input = require("fs")
@@ -24,31 +26,37 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = input.shift();
-const arr = input.map(c => c.split(" ").map(Number));
+const [N, M, R] = input.shift().split(" ").map(Number);
+const graph = Array.from({length : N + 1}, () => []);
+let visited = new Array(N + 1).fill(0);
+let order = 1;
 
-let dp = arr;
+for(let str of input){
+    const [x, y] = str.split(" ").map(Number);
+    graph[x].push(y);
+    graph[y].push(x);
+}
 
-for(let i =0; i < N; i++){
-    if(i === 0){
-        dp[i][0] = dp[i][0];
-        continue;
-    }
+graph.forEach((e) => e.sort((a,b) => b - a));
 
-    for(let j = 0; j < dp[i].length; j++){
-        if(i === 1){
-            dp[i][j] = dp[i][j] + dp[i-1][0];
-            continue;
-        }
-        if(j === 0){
-            dp[i][j] = dp[i][j] + dp[i-1][j];
-        }else if(j === dp[i].length - 1){
-            dp[i][j] = dp[i][j] + dp[i-1][j-1];
-        }else{
-            dp[i][j] = dp[i][j] + Math.max(dp[i-1][j], dp[i-1][j-1]);
+function dfs(graph, v, visited){
+    let stack = [v];
+
+    while(stack.length){
+        const v = stack.pop();
+
+        if(visited[v]===0){
+            visited[v] = order++;
+
+            for(let i = graph[v].length -1 ; i >= 0; i--){
+                const next = graph[v][i];
+                if(visited[next] === 0){
+                    stack.push(next);
+                }
+            }
         }
     }
 }
 
-console.log(Math.max(...dp[dp.length-1]));
-
+dfs(graph,R,visited);
+console.log(visited);
