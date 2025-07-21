@@ -26,36 +26,59 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = Number(input.shift());
-const link = Number(input.shift());
+const [N, M, V] = input.shift().split(" ").map(Number);
 const graph = Array.from({length : N + 1}, () => []);
-let visited = new Array(N +1).fill(0);
-const arr = [];
+let visitedDFS= new Array(N +1).fill(0);
+let visitedBFS= new Array(N +1).fill(0);
+const answerDFS = [];
+const answerBFS = [];
 
 for(let str of input){
     const [x, y] = str.split(" ").map(Number);
     graph[x].push(y);
     graph[y].push(x);
 }
-graph.forEach((e) => e.sort((a,b) => b - a));
+graph.forEach((e) => e.sort((a,b) => a - b ));
 
-function dfs (graph, start, visited) {
+const dfs = (graph, start, visitedDFS) => {
     const stack = [start];
-    
+
     while(stack.length){
         const v = stack.pop();
-        if(!visited[v]){
-            visited[v] = true;
+
+        if(!visitedDFS[v]){
+            visitedDFS[v] = true;
+            answerDFS.push(v);
             for(let i = graph[v].length -1; i >= 0; i--){
-                const next= graph[v][i];
-                if(!visited[next]){
+                const next = graph[v][i];
+                if(!visitedDFS[next]){
                     stack.push(next);
+
                 }
             }
         }
     }
 }
 
-dfs(graph, 1, visited);
 
-console.log(visited.filter(c => c !== 0).length - 1);
+const bfs = (graph, start, visitedBFS) => {
+    const q = [start];
+    visitedBFS[start] = true;
+
+    while(q.length){
+        const v = q.shift();
+        answerBFS.push(v);
+        for(const next of graph[v]){
+            if(!visitedBFS[next]){
+                visitedBFS[next] = true;
+                q.push(next);
+            }
+        }
+    }
+}
+
+dfs(graph, V, visitedDFS);
+bfs(graph, V, visitedBFS);
+
+console.log(answerDFS.join(" "));
+console.log(answerBFS.join(" "));

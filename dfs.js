@@ -170,3 +170,34 @@ const b2 = (graph,v,visited) => {
     }
   }
 }
+
+const dfs = (graph, start, visited) => {
+  const stack = [start];
+
+  while(stack.length){
+    const v = stack.pop();
+
+    if(!visited[v]){
+      visited[v] = true;
+
+      for(let i = graph[v].length -1; i >= 0; i--){
+        const next = graph[v][i];
+        if(!visited[next]){
+          stack.push(next);
+        }
+      }
+    }
+  }
+}
+
+const bfs_3 = (graph, start, visited) => {
+  const q = [start];
+
+  while(q.length){
+    const v = q.shift();
+
+    if(!visited[v]){
+      
+    }
+  }
+}
