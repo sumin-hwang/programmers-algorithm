@@ -2,8 +2,6 @@
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 // const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
 
-const { NOMEM } = require('dns');
-
 // const input = require("fs")
 //   .readFileSync("/dev/stdin")
 //   .toString()
@@ -25,53 +23,38 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [M, N, H] = input.shift().split(" ").map(Number);
+const N = Number(input.shift());
+let graph = Array.from(Array(N + 1), () => []);
+let visited = Array.from(N + 1).fill(false);
+let arr = [];
 
-let box = [];
-let q = [];
-
-for(let h = 0; h < H; h++){
-    const layer = [];
-    for(let n =0; n < N; n++){
-        const row = input.shift().split(" ").map(Number);
-        layer.push(row);
-
-        row.forEach((val, m) => {
-            if(val === 1) q.push([h , n , m ]);
-        })
-    }
-    box.push(layer);
-
+for(let str of input){
+    const [x, y] = str.split(" ").map(Number);
+    graph[x].push(y);
+    graph[y].push(x);
 }
 
-const dx = [-1, 1, 0, 0, 0, 0];
-const dy = [0, 0, -1, 1, 0, 0];
-const dz = [0, 0, 0, 0, -1, 1];
+const dfs = (graph, start, visited) => {
+    let stack = [start];
+    
+    while(stack.length){
+        const v = stack.pop();
 
-const bfs = () => {
-    let front = 0;
-    while(front < q.length){
-        const [z, x, y] = q[front++];
+        if(!visited[v]){
+            visited[v] = true;
+        }
 
-        for(let i =0; i < 6; i++){
-            const [nz, nx, ny] = [z + dz[i], x + dx[i], y + dy[i]];
-            if
+        for(let i = graph[v].length - 1; i >= 0; i--){
+            const next = graph[v][i];
+
+            if(!visited[next]){
+                stack.push(next);
+                arr[next] = v;
+            }
         }
     }
 }
 
-bfs();
+dfs(graph,1, visited);
 
-let result = 0;
-let hasUnripe = false;
-
-box.forEach(row => {
-    row.forEach(val => {
-        if(val === 0){
-            hasUnripe = true;
-        }
-        result = Math.max(result, val);
-    })
-})
-
-console.log(hasUnripe ? -1 : result -1);
+console.log(arr.slice(2).join("\n"));
