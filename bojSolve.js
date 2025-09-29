@@ -3,17 +3,19 @@
 // const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
 
 // const input = require("fs")
-//   .readFileSync("/dev/stdin")
+//  .readFileSync("/dev/stdin")
 //   .toString()
 //   .trim()
 //   .split("\n");
-
 
 //let input = require('fs').readFileSync('/dev/stdin').toString().trim()
 
 // const fs = require('fs');
 // const input = fs.readFileSync('/dev/stdin').toString().split('\n');
 
+
+// const fs = require("fs");
+// const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 // const a = require("fs").readFileSync("/dev/stdin")
 
 //배열을 받아서 숫자로 저장하기
@@ -23,38 +25,36 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = Number(input.shift());
-let graph = Array.from(Array(N + 1), () => []);
-let visited = Array.from(N + 1).fill(false);
-let arr = [];
+const [total, current, startlink, up, down] = input.shift().split(" ").map(Number);
+const dx = [up, down*(-1)];
+const visited = new Array(total + 1).fill(false);
+const dist = new Array(total + 1).fill(-1); // dist도 필요하다.
 
-for(let str of input){
-    const [x, y] = str.split(" ").map(Number);
-    graph[x].push(y);
-    graph[y].push(x);
-}
+const bfs = (start) => {
+    const q = [start];
+    dist[start] = 0;
+    visited[start] = true;
 
-const dfs = (graph, start, visited) => {
-    let stack = [start];
-    
-    while(stack.length){
-        const v = stack.pop();
+    while(q.length){
+        const v = q.shift();
 
-        if(!visited[v]){
-            visited[v] = true;
+        if(v === startlink){
+            return dist[v];
         }
 
-        for(let i = graph[v].length - 1; i >= 0; i--){
-            const next = graph[v][i];
+        for(let i = 0; i < dx.length; i++){
+            const nx = dx[i] + v;
 
-            if(!visited[next]){
-                stack.push(next);
-                arr[next] = v;
+            if(nx > 0 && nx <= total && !visited[nx]){
+                visited[nx] = true;
+                dist[nx] = dist[v] + 1;
+                q.push(nx);
+
             }
         }
     }
+
+    return "use the stairs";
 }
 
-dfs(graph,1, visited);
-
-console.log(arr.slice(2).join("\n"));
+console.log(bfs(current));
