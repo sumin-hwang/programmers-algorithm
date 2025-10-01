@@ -25,36 +25,52 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [total, current, startlink, up, down] = input.shift().split(" ").map(Number);
-const dx = [up, down*(-1)];
-const visited = new Array(total + 1).fill(false);
-const dist = new Array(total + 1).fill(-1); // dist도 필요하다.
+const N = Number(input.shift());
+const map = new Array(N);
 
-const bfs = (start) => {
-    const q = [start];
-    dist[start] = 0;
-    visited[start] = true;
+const dx = [-1, 1, 0, 0];
+const dy = [0, 0, -1, 1];
 
-    while(q.length){
-        const v = q.shift();
+for(let i =0; i < N; i++){
+    map[i] = input[i].split("");
+}
 
-        if(v === startlink){
-            return dist[v];
-        }
+const dfs = (x, y, map, visited) => {
+    const stack = [[x, y]];
+    const letter = map[x][y];
+    visited[x][y] = true;
 
-        for(let i = 0; i < dx.length; i++){
-            const nx = dx[i] + v;
+    while(stack.length){
+        const [vx, vy] = stack.pop();
 
-            if(nx > 0 && nx <= total && !visited[nx]){
-                visited[nx] = true;
-                dist[nx] = dist[v] + 1;
-                q.push(nx);
+        for(let i =0; i < 4; i++){
+            const [nx, ny] = [vx + dx[i], vy + dy[i]];
 
+            if(nx >= 0 && nx < N && ny >=0 && ny < N && !visited[nx][ny]){
+                if(letter === map[nx][ny]){
+                    visited[nx][ny] = true;
+                    stack.push([nx, ny]);
+                }
             }
         }
     }
-
-    return "use the stairs";
 }
 
-console.log(bfs(current));
+function test(map){
+    let count = 0;
+    const visited = Array.from({length : N }, () => Array(N).fill(false));
+    for(let i =0; i < N; i++){
+        for(let j =0; j < N; j++){
+            if(!visited[i][j]){
+                dfs(i, j, map, visited);
+                count++;
+            } 
+        }
+    }
+
+    return count;
+}
+
+console.log(test(map));
+const RGmap = map.map(c => c.map(j => j === 'R' ? j = 'G' : j));
+console.log(test(RGmap));
