@@ -25,22 +25,27 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [M, N] = input.shift().split(" ").map(Number);
-const box = new Array(N);
-const dx = [-1, 1, 0, 0];
-const dy = [0, 0, -1, 1];
-let q = [];
+const T = Number(input.shift());
 
-for(let i =0; i < N; i++){
-    box[i] = input[i].split(" ").map(Number);
-}
 
-for(let i = 0; i < N; i++){
-    for(let j =0; j < M; j++){
-        if(box[i][j]===1){
-            q.push([i, j]);
-        }
+function fib(n){
+    var zero = 0;
+    var one = 0;
+    if(n ===0){
+        zero = zero + 1;
+        console.log(zero, one);
+        return 0;
+    }else if (n === 1){
+        one = one + 1;
+        return 1;
+    }else{
+        return fib(n-1) + fib(n -2);
     }
+
 }
 
-console.log(q);
+
+for(let i =0; i < T; i++){
+    const N = Number(input[i]);
+    fib(N);
+}
