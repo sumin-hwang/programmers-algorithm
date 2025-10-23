@@ -25,27 +25,25 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const T = Number(input.shift());
+const N = Number(input.shift());
+const T = [];
+const P = [];
 
-
-function fib(n){
-    var zero = 0;
-    var one = 0;
-    if(n ===0){
-        zero = zero + 1;
-        console.log(zero, one);
-        return 0;
-    }else if (n === 1){
-        one = one + 1;
-        return 1;
-    }else{
-        return fib(n-1) + fib(n -2);
-    }
-
+for(let i = 0; i < N; i++){
+  const [t, p] = input[i].split(' ').map(Number);
+  T.push(t);
+  P.push(p);
 }
 
 
-for(let i =0; i < T; i++){
-    const N = Number(input[i]);
-    fib(N);
+const dp = Array(N + 1).fill(0);
+
+for(let i = N-1; i >= 0 ;i--){
+  if(i + T[i] > N){
+    dp[i] = dp[i + 1];
+  }else{
+    dp[i] = Math.max(dp[i + 1], P[i] + dp[i + T[i]]);
+  }
 }
+
+console.log(dp[0]);
