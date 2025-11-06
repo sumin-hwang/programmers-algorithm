@@ -26,20 +26,19 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-let arr = new Array(N + 1).fill(true);
+let count = 0;
 
-for(let i = 1; i <= N; i++){
+for(let i = 666; i <= 10000666; i++){
+  
   let temp = i.toString();
 
-  if(temp.length > 2){
-    let diff = Number(temp[0]) - Number(temp[1]);
+  if(!temp.includes('666')){
+    continue;
+  }else{
+    count++;    
+  }
 
-    for(let j = 1; j < temp.length - 1; j++){
-      if(Number(temp[j]) - Number(temp[j + 1]) !== diff){
-        arr[i] = false;
-      }
-    }
+  if(count === N){
+    console.log(temp);
   }
 }
-
-console.log(arr.filter(c => c === true).length - 1);
