@@ -25,21 +25,21 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, M] = input.shift().split(" ").map(Number);
-const card = input.shift().split(" ").map(Number);
+const N = Number(input.shift());
+let arr = new Array(N + 1).fill(true);
 
-let maxSum = 0;
+for(let i = 1; i <= N; i++){
+  let temp = i.toString();
 
-for(let i =0; i < N -2; i++){
-  for(let j = i +1; j < N; j++){
-    for(let k = j + 1; k < N; k++){
-      let sum = card[i] + card[j] + card[k];
+  if(temp.length > 2){
+    let diff = Number(temp[0]) - Number(temp[1]);
 
-      if(sum <= M && sum > maxSum){
-        maxSum = sum;
+    for(let j = 1; j < temp.length - 1; j++){
+      if(Number(temp[j]) - Number(temp[j + 1]) !== diff){
+        arr[i] = false;
       }
     }
   }
 }
 
-console.log(maxSum);
+console.log(arr.filter(c => c === true).length - 1);
