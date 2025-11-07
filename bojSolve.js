@@ -25,20 +25,32 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = Number(input.shift());
-let count = 0;
+const [N, M] = input[0].split(" ").map(Number);
+const board = input.slice(1).map(c => c.trim());
 
-for(let i = 666; i <= 10000666; i++){
-  
-  let temp = i.toString();
+let minRepaint = Infinity;
 
-  if(!temp.includes('666')){
-    continue;
-  }else{
-    count++;    
-  }
+for(let i =0; i <= N - 8; i++){
+  for(let j =0; j <= M - 8; j++){
+    let repaintW = 0; // W로 시작하는 경우
+    let repaintB = 0; // B로 시작하는 경우 
 
-  if(count === N){
-    console.log(temp);
+    for(let x =0; x < 8; x++){
+      for(let y = 0; y < 8; y++){
+        const current = board[i + x][j + y];
+        const isEven = (x + y)%2 === 0;
+
+        if(isEven){ // 시작색이 나와야하는데 아닌 경우,
+          if(current !== "W") repaintW++; // W로 시작하는 체스판의 경우
+          if(current !== "B") repaintB++;
+        }else{      // 시작색 반대색이 나와야하는데 아닌 경우
+          if(current !== "B") repaintW++;
+          if(current !== "W") repaintB++;
+        }
+      }
+    }
+    minRepaint = Math.min(minRepaint, repaintW, repaintB);
   }
 }
+
+console.log(minRepaint);
