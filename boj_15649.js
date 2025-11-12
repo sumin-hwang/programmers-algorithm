@@ -17,7 +17,7 @@ function backtracking(num){
     }
 
     visited[i] = true;
-    output.push(i);
+    output.push(i); 
     backtracking(num + 1);
     output.pop();
     visited[i] = false;

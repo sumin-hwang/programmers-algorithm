@@ -15,7 +15,7 @@
 
 
 // const fs = require("fs");
-// const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+// const input = fs.readFleSync("/dev/stdin").toString().trim().split("\n");
 // const a = require("fs").readFileSync("/dev/stdin")
 
 //배열을 받아서 숫자로 저장하기
@@ -25,31 +25,29 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, M] = input.shift().split(" ").map(Number);
-const board = input.map(c => c.trim());
+const [N, M] = input.shift().split(" ").map(Number); // 4,2
 
-let min = Infinity;
+const result = [];
+const path = [];
 
-for(let i =0; i <= N-8; i++){
-  for(let j =0; j <= M-8; j++){
-    let writeB = 0;
-    let writeW = 0;
+const visited = new Array(N + 1).fill(false);
 
-    for(let x =0; x < 8; x++){
-      for(let y =0; y <8; y++){
-        let current = board[i + x][j + y];
-        let isEven = (x + y)%2;
+function backtrack(depth) {
+  if(depth === M){
+    result.push(path.join(' '));
+    return;
+  }
 
-        if(isEven){
-          current !== "W" ? writeW++ : writeB++;
-        }else{
-          current !== "B" ? writeW++ : writeB++;
-        }
-      }
-    }
+  for(let i = 1; i <= N; i++){
+    // if(visited[i]) continue;
 
-    min = Math.min(min, writeB, writeW);
+    // visited[i] = true;
+    path.push(i);
+    backtrack(depth + 1);
+    path.pop();
+    // visited[i] = false;
   }
 }
 
-console.log(min);
+backtrack(0);
+console.log(result.join("\n"));
