@@ -25,29 +25,37 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, M] = input.shift().split(" ").map(Number); // 4,2
+const N = Number(input.shift());
 
-const result = [];
-const path = [];
+let count = 0;
+const cols = new Array(N).fill(false);
+const diag1 = new Array(2*N -1).fill(false);
+const diag2 = new Array(2*N - 1).fill(false);
 
-const visited = new Array(N + 1).fill(false);
-
-function backtrack(depth) {
-  if(depth === M){
-    result.push(path.join(' '));
+function solve(row){
+  if(row === N){
+    count++;
     return;
   }
 
-  for(let i = 1; i <= N; i++){
-    // if(visited[i]) continue;
+  for(let col = 0; col < N; col++){
+    let d1 = row + col;
+    let d2 = row - col + N - 1;
 
-    // visited[i] = true;
-    path.push(i);
-    backtrack(depth + 1);
-    path.pop();
-    // visited[i] = false;
+    if(!cols[col] && !diag1[d1] && !diag2[d2]){
+      cols[col] = true;
+      diag1[d1] = true;
+      diag2[d1] = true;
+
+      solve(row + 1);
+
+      cols[col] = false;
+      diag1[d1] = false;
+      diag2[d1] = false;
+
+    }
   }
 }
 
-backtrack(0);
-console.log(result.join("\n"));
+solve(0);
+console.log(count);
