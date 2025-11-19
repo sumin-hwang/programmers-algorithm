@@ -26,27 +26,23 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-const answer = [];
+let stack = [];
 
-for(let i =0; i < N; i++){
-  const line = input[i];
-  const stack = [];
-  let isValid = true;
+for(let i = 0; i < N; i++){
+  let num = Number(input[i]);
 
-  for(let ch of line){
-    if(ch === "("){
-      stack.push(ch);
-    }else{
-      if(stack.length === 0){
-        isValid = false;
-        break;
-      }
-      stack.pop();
-    }
-
-    
+  if(num === 0){
+    stack.pop();
+  }else{
+    stack.push(num);
   }
-  isValid && stack.length === 0 ? answer.push("YES") : answer.push("NO");
+
 }
 
-console.log(answer.join("\n"));
+if(stack.length === 0 ){
+  console.log(0);
+}else{
+  stack = stack.map(Number);
+  let sum = stack.reduce((cur, i) => cur + i);
+  console.log(sum);
+}
