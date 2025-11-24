@@ -25,24 +25,37 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = Number(input.shift());
-let stack = [];
+const n = input[0];
+const target = input.slice(1);
+const answer = [];
 
-for(let i = 0; i < N; i++){
-  let num = Number(input[i]);
 
-  if(num === 0){
-    stack.pop();
-  }else{
-    stack.push(num);
+
+for(let str of target){
+  const leftStack = [];
+  const rightStack = [];
+
+  for(let ch of str){
+    if(ch === '<'){
+      if(leftStack.length > 0){
+        let temp = leftStack.pop();
+        rightStack.push(temp);
+      }
+    }else if (ch === '>'){
+      if(leftStack.length > 0){
+        leftStack.push(rightStack.pop());
+      }
+    }else if (ch === '-'){
+      if(leftStack.length > 0){
+        leftStack.pop();
+      }
+    }else{
+      leftStack.push(ch);
+    }
   }
 
+  const result = leftStack.concat(rightStack.reverse()).join('');
+  answer.push(result);
 }
 
-if(stack.length === 0 ){
-  console.log(0);
-}else{
-  stack = stack.map(Number);
-  let sum = stack.reduce((cur, i) => cur + i);
-  console.log(sum);
-}
+console.log(answer.join('\n'));
