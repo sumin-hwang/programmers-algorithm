@@ -25,37 +25,28 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const n = input[0];
-const target = input.slice(1);
-const answer = [];
+let str = input[0];
+const bomb = input[1];
 
+const stack = [];
 
+for(let ch of str){
+  stack.push(ch);
+  let match = true;
 
-for(let str of target){
-  const leftStack = [];
-  const rightStack = [];
-
-  for(let ch of str){
-    if(ch === '<'){
-      if(leftStack.length > 0){
-        let temp = leftStack.pop();
-        rightStack.push(temp);
+  if(stack.length >= bomb.length){
+    for(let i =0; i < bomb.length; i++){
+      if(stack[stack.length - bomb.length + i] !== bomb[i]){
+        match = false;
+        break;
       }
-    }else if (ch === '>'){
-      if(leftStack.length > 0){
-        leftStack.push(rightStack.pop());
-      }
-    }else if (ch === '-'){
-      if(leftStack.length > 0){
-        leftStack.pop();
-      }
-    }else{
-      leftStack.push(ch);
+    }
+
+    if(match){
+      stack.length -= bomb.length;
     }
   }
-
-  const result = leftStack.concat(rightStack.reverse()).join('');
-  answer.push(result);
 }
 
-console.log(answer.join('\n'));
+const result = stack.join("");
+console.log(result === "" ? "FRULA" : result);
