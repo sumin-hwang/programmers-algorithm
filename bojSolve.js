@@ -25,10 +25,35 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-let str = input[0];
-let count = 0;
-const stack = [];
+let str = input.shift();
+const order = Number(input[0]);
 
-for(let i =0; i < input.length; 9)
+let rightStack = [];
+let leftStack = [];
 
-console.log(count);
+for(let ch of str){
+  leftStack.push(ch);
+}
+
+for(let i =1; i <= order; i++){
+  const [x, y] = input[i].split(" ");
+
+  if(x === "P"){
+    leftStack.push(y); //abcdx
+  }else if(x === "L"){
+    if(leftStack.length > 0){
+      let temp = leftStack.pop();
+      rightStack.push(temp);
+    }
+  }else if (x === "D"){
+    if(rightStack.length > 0){
+      leftStack.push(rightStack.pop());
+    }
+  }else if (x === "B"){
+    if(leftStack.length > 0 ){
+      leftStack.pop();
+    }
+  }
+}
+
+console.log(leftStack.join("") + rightStack.reverse().join(""));
