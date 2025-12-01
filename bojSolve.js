@@ -25,74 +25,39 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, M, V] = input.shift().split(" ").map(Number);
-const graph = Array.from({ length : N + 1}, () => []);
-const visitedD = new Array(N + 1).fill(false);
-const visitedB = new Array(N + 1).fill(false);
-const answerD = [];
-const answerB = [];
+const N = Number(input.shift());
+const M = Number(input.shift());
 
-for(let i = 1; i <= N; i++){
-  graph[i].sort((a, b) => a - b);
-}
+const graph = Array.from({ length : N + 1}, () => []);
+const visited = new Array(N + 1).fill(false);
 
 for(let str of input){
-  const [x, y]  =str.split(" ").map(Number);
+  const [x, y] = str.split(" ").map(Number);
+
   graph[x].push(y);
   graph[y].push(x);
 }
 
-const dfs = (graph, start, visited) => {
-  visited[start] = true;
-  answerD.push(start);
+graph.forEach((e) => e.sort((a,b) => a - b));
 
-  for(const cur of graph[start]){
-    if(!visited[cur]){
-      dfs(graph, cur, visited);
-    }
-  }
-}
-
-const dfsS = (graph, start, visited) => {
+function dfs(graph, start, visited){
   const stack = [start];
 
   while(stack.length){
     const v = stack.pop();
+
     if(!visited[v]){
       visited[v] = true;
 
-      for(let node of graph[v]){
-        if(!visited[node]){
-          visited[node] = true;
-          stack.push(node);
+      for(let i = graph[v].length - 1; i >= 0; i--){
+        const next = graph[v][i];
+        if(!visited[next]){
+          stack.push(next);
         }
       }
     }
-
-    
   }
 }
 
-const bfs = (graph, start, visited) => {
-  const q = [];
-  q.push(start);
-  visited[start] = true;
-
-  while(q.length){
-    const v = q.shift();
-    answerB.push(v);
-    
-    for(const node of graph[v]){
-      if(!visited[node]){
-        visited[node] = true;
-        q.push(node);
-      }
-    }
-  }
-}
-
-dfs(graph, V, visitedD);
-bfs(graph, V, visitedB);
-
-console.log(answerD.join(" "));
-console.log(answerB.join(" "));
+dfs(graph, 1, visited);
+console.log(visited.filter(c => c!== 0).length - 1);
