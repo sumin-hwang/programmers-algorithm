@@ -41,25 +41,25 @@ for(let str of input){
 
 graph.forEach((e) => e.sort((a,b) => a - b));
 
-const bfs = (graph, start, visited) => {
-  const q = [];
-  q.push(start);
-  visited[start] = order++;
+const dfs = (graph, start, visited) => {
+  const stack = [start];
 
-  while(q.length){
-    const v = q.shift();
+  while(stack.length){
+    const v = stack.pop();
 
-    for(let node of graph[v]){
-      if(!visited[node]){
-        visited[node] = order++;
-        q.push(node);
+    if(!visited[v]){
+      visited[v] = order++;
+
+      for(let i = graph[v].length - 1; i >=0; i--){
+        const next = graph[v][i];
+        if(!visited[next]){
+          stack.push(next);
+        }
       }
     }
   }
 }
 
-bfs(graph, R, visited);
+dfs(graph, R, visited);
 
-for(let i =1; i <= N; i++){
-  console.log(visited[i]);
-}
+console.log(visited);
