@@ -2,6 +2,8 @@
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 // const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
 
+const { fileURLToPath } = require('url');
+
 // const input = require("fs")
 //  .readFileSync("/dev/stdin")
 //   .toString()
@@ -25,11 +27,10 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = Number(input.shift());
-const M = Number(input.shift());
-
+const [N, M, R] = input.shift().split(" ").map(Number);
 const graph = Array.from({ length : N + 1}, () => []);
-const visited = new Array(N + 1).fill(false);
+const visited = new Array(N + 1).fill(0);
+let order = 1;
 
 for(let str of input){
   const [x, y] = str.split(" ").map(Number);
@@ -40,24 +41,25 @@ for(let str of input){
 
 graph.forEach((e) => e.sort((a,b) => a - b));
 
-function dfs(graph, start, visited){
-  const stack = [start];
+const bfs = (graph, start, visited) => {
+  const q = [];
+  q.push(start);
+  visited[start] = order++;
 
-  while(stack.length){
-    const v = stack.pop();
+  while(q.length){
+    const v = q.shift();
 
-    if(!visited[v]){
-      visited[v] = true;
-
-      for(let i = graph[v].length - 1; i >= 0; i--){
-        const next = graph[v][i];
-        if(!visited[next]){
-          stack.push(next);
-        }
+    for(let node of graph[v]){
+      if(!visited[node]){
+        visited[node] = order++;
+        q.push(node);
       }
     }
   }
 }
 
-dfs(graph, 1, visited);
-console.log(visited.filter(c => c!== 0).length - 1);
+bfs(graph, R, visited);
+
+for(let i =1; i <= N; i++){
+  console.log(visited[i]);
+}
