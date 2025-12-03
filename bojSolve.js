@@ -27,39 +27,40 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, M, R] = input.shift().split(" ").map(Number);
-const graph = Array.from({ length : N + 1}, () => []);
-const visited = new Array(N + 1).fill(0);
-let order = 1;
+const [N, M] = input.shift().split(" ").map(Number);
+const map = new Array(N);
+const visited = Array.from(Array(N), () => Array(M).fill(false));
+let count = 0;
 
-for(let str of input){
-  const [x, y] = str.split(" ").map(Number);
+const dx = [-1, 1, 0, 0];
+const dy = [0, 0, -1, 1];
 
-  graph[x].push(y);
-  graph[y].push(x);
+for(let i =0; i < input.length; i++){
+  map[i] = input[i].split("").map(Number);
 }
 
-graph.forEach((e) => e.sort((a,b) => a - b));
+const bfs = (x, y) => {
+  const q = [];
+  q.push([x, y]);
+  visited[x][y] = true;
 
-const dfs = (graph, start, visited) => {
-  const stack = [start];
+  while(q.length){
+    const [x1, y1] = q.shift();
 
-  while(stack.length){
-    const v = stack.pop();
+    for(let i=0; i < 4; i++){
+      const [nx, ny] = [x1 + dx[i], y1 + dy[i]];
 
-    if(!visited[v]){
-      visited[v] = order++;
-
-      for(let i = graph[v].length - 1; i >=0; i--){
-        const next = graph[v][i];
-        if(!visited[next]){
-          stack.push(next);
+      if(nx >= 0 && nx < N && ny >= 0 && ny < M){
+        if(map[nx][ny]=== 1 && !visited[nx][ny]){
+          visited[nx][ny] = true;
+          map[nx][ny] = map[x1][y1] + 1;
+          q.push([nx, ny]);
         }
       }
     }
   }
+
 }
 
-dfs(graph, R, visited);
-
-console.log(visited);
+bfs(0,0);
+console.log(map[N-1][M -1]);
