@@ -27,13 +27,32 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [M, N, K] = input.shift().split(" ").map(Number);
-const farm = Array.from(Array(N), () => Array(M).fill(0));
-const visited = Array.from(Array(N), () => Array(M).fill(false));
+const [N, K] = input.shift().split(" ").map(Number);
+const map = new Array(100001).fill(0);
+const visited = new Array(100001).fill(false);
+let count = 0;
 
-for(let str of input){
-  const [x, y] = str.split(" ").map(Number);
-  farm[y][x] = 1;
+const bfs = (map, visited, start) => {
+  const q = [];
+  q.push(start);
+  visited[start] = true;
+
+  while(q.length){
+    const vx = q.shift();
+
+    if(vx === K){
+      return map[vx];
+    }
+
+    for(let nx of [vx-1, vx+1, vx*2]){
+      if(nx >= 0 && nx < 100000 && !visited[nx]){
+        visited[nx] = true;
+        map[nx] = map[vx] + 1;
+        q.push(nx);
+      }
+    }
+  }
 }
 
-console.log(farm);
+console.log(
+bfs(map, visited, N));
