@@ -13,25 +13,26 @@ for(let str of input){
 
 graph.forEach((e) => e.sort((a,b) => a - b));
 
-const dfs = (graph, start, visited) => {
+function dfsStack(start) {
   const stack = [start];
+  visited[start] = true; // start 방문처리
 
-  while(stack.length){
+  while (stack.length) {
     const v = stack.pop();
 
-    if(!visited[v]){
-      visited[v] = order++;
-
-      for(let i = graph[v].length - 1; i >=0; i--){
-        const next = graph[v][i];
-        if(!visited[next]){
-          stack.push(next);
-        }
+    for (let i = graph[v].length - 1; i >= 0; i--) {
+      const next = graph[v][i];
+      if (!visited[next]) {
+        visited[next] = true; // 방문처리 여기서 한 번만 함. 
+        stack.push(next);
       }
     }
   }
 }
-
 dfs(graph, R, visited);
+
+
+
+
 
 console.log(visited);
