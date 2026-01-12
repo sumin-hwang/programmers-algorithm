@@ -30,6 +30,23 @@ const bfs2 = (graph,v,visited) => {
   }
 }
 
+const bfs3 = (graph, v, visited) => {
+  const q = [];
+  q.push(start);
+  visited[start] = true;
+
+  while(q.length){
+    const v = q.shift();
+
+    for(const next of graph[v]){
+      if(!visited[next]){
+        q.push(next);
+        visited[next] = true;
+      }
+    }
+  }
+}
+
 // dfs - 재귀
 const dfs = (graph1, v, visited) => {
     visited[v] = true; // 시작노드 방문처리
@@ -41,6 +58,7 @@ const dfs = (graph1, v, visited) => {
         }
     }
 }
+
 
 //dfs - stack을 사용한
 const dfs2 = (graph, start, visited) => {
@@ -61,6 +79,7 @@ const dfs2 = (graph, start, visited) => {
     }
   }
 }
+
 
 // 인접 리스트 만들기
 for(let str of input){

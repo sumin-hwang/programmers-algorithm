@@ -29,10 +29,7 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const [N, M] = input.shift().split(" ").map(Number);
-const map = new Array(M);
-const visited = Array.from(Array(M), () => Array(N).fill(false));
+const box = new Array(M);
+const visited = Array.from({ length : M }, () => Array(N).fill(false));
 
-const dx = [-1, 1, 0, 0];
-const dy = [0, 0, -1, 1];
-
-console.log(dx, dy);
+const q = [];
