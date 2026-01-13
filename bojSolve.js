@@ -33,3 +33,19 @@ const box = new Array(M);
 const visited = Array.from({ length : M }, () => Array(N).fill(false));
 
 const q = [];
+
+for(let i=0; i < M; i++){
+    box[i] = input[i].split(" ").map(Number);
+}
+
+console.log(box);
+
+for(let i = 0; i < M; i++) {
+    for(let j = 0; j < N; j++) {
+        if(box[i][j] === 1){
+            q.push([i, j]);
+        }
+    }
+}
+
+console.log(q);
