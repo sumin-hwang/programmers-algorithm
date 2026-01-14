@@ -28,24 +28,52 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, M] = input.shift().split(" ").map(Number);
-const box = new Array(M);
-const visited = Array.from({ length : M }, () => Array(N).fill(false));
+const N = Number(input.shift());
+const map = new Array(N);
 
-const q = [];
+const dx = [-1, 1, 0, 0];
+const dy = [0, 0, -1, 1];
 
-for(let i=0; i < M; i++){
-    box[i] = input[i].split(" ").map(Number);
+for(let i =0; i < input.length; i++){
+    map[i] = input[i].split("");
 }
 
-console.log(box);
+function dfs (x, y, map, visited){
+    const letter = map[x][y];
+    const stack = [[x, y]];
+    visited[x][y] = true;
 
-for(let i = 0; i < M; i++) {
-    for(let j = 0; j < N; j++) {
-        if(box[i][j] === 1){
-            q.push([i, j]);
+    while(stack.length){
+        const [x1, y1] = stack.pop();
+
+        for(let i =0; i <4; i++){
+            const [nx, ny] = [x1 + dx[i], y1 + dy[i]];
+
+            if(nx >= 0 && nx < N && ny >=0 && ny < N && !visited[nx][ny]){
+                if(map[nx][ny] === letter){
+                    stack.push([nx, ny]);
+                    visited[nx][ny] = true;
+                }
+            }
         }
     }
 }
 
-console.log(q);
+
+function run (map){
+    const visited = Array.from({length : N}, () => Array(N).fill(false));
+    let count = 0
+    for(let i =0; i < N; i++){
+        for(let j = 0; j < N; j++){
+            if(!visited[i][j]){
+                dfs(i, j, map, visited);
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+console.log(run(map));
+const RGmap = map.map(c => c.map(j => j === 'R' ? j = 'G' : j));
+console.log(run(RGmap));
