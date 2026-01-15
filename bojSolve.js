@@ -29,51 +29,15 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-const map = new Array(N);
+let arr = Array.from({ length : N}, () => Array(2));
 
-const dx = [-1, 1, 0, 0];
-const dy = [0, 0, -1, 1];
-
-for(let i =0; i < input.length; i++){
-    map[i] = input[i].split("");
+for(let i=0; i <N; i++){
+    arr[i] = input[i].split(" ");
+    arr[i][0] = Number(arr[i][0]);
 }
 
-function dfs (x, y, map, visited){
-    const letter = map[x][y];
-    const stack = [[x, y]];
-    visited[x][y] = true;
+arr.sort((a,b) => {
+    return a[0] - b[0];
+})
 
-    while(stack.length){
-        const [x1, y1] = stack.pop();
-
-        for(let i =0; i <4; i++){
-            const [nx, ny] = [x1 + dx[i], y1 + dy[i]];
-
-            if(nx >= 0 && nx < N && ny >=0 && ny < N && !visited[nx][ny]){
-                if(map[nx][ny] === letter){
-                    stack.push([nx, ny]);
-                    visited[nx][ny] = true;
-                }
-            }
-        }
-    }
-}
-
-
-function run (map){
-    const visited = Array.from({length : N}, () => Array(N).fill(false));
-    let count = 0
-    for(let i =0; i < N; i++){
-        for(let j = 0; j < N; j++){
-            if(!visited[i][j]){
-                dfs(i, j, map, visited);
-                count++;
-            }
-        }
-    }
-    return count;
-}
-
-console.log(run(map));
-const RGmap = map.map(c => c.map(j => j === 'R' ? j = 'G' : j));
-console.log(run(RGmap));
+arr.map(c => console.log(c.join(" ")));
