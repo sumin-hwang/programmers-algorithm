@@ -29,5 +29,23 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
+let timetable = [];
 
-console.log(input);
+for(let i=0; i < N; i++){
+    timetable[i] = input[i].split(" ").map(Number);
+}
+
+timetable = timetable.sort((a, b) => a[1]=== b[1] ? a[0] - b[0] : a[1] - b[1]);
+
+let end = timetable[0][1];
+let answer = 1;
+for(let i=0; i < N; i++){
+    let [from, to] = timetable[i];
+
+    if(from > end){
+        end = to;
+        answer++;
+    }
+}
+
+console.log(answer);
