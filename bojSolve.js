@@ -2,8 +2,7 @@
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 // const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
 
-const { c } = require('tar');
-const { fileURLToPath } = require('url');
+
 
 // const input = require("fs")
 //  .readFileSync("/dev/stdin")
@@ -29,23 +28,32 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-let timetable = [];
+let arr = input[0].split(" ").map(Number);
+const M = Number(input[1]);
+const quiz = input[2].split(" ").map(Number);
 
-for(let i=0; i < N; i++){
-    timetable[i] = input[i].split(" ").map(Number);
-}
+arr = arr.sort((a,b) => a - b);
 
-timetable = timetable.sort((a, b) => a[1]=== b[1] ? a[0] - b[0] : a[1] - b[1]);
+let answer = [];
 
-let end = timetable[0][1];
-let answer = 1;
-for(let i=0; i < N; i++){
-    let [from, to] = timetable[i];
+const binarySearch = (arr, target) => {
+    let start = 0;
+    let end = arr.length - 1;
 
-    if(from > end){
-        end = to;
-        answer++;
+    while(start <= end){
+        let mid = Math.floor((start +end)/ 2);
+
+        if(target < arr[mid]){
+            end = mid -1;
+        }else if (target > arr[mid]){
+            start = mid + 1;
+        }else{
+            return 1;
+        }
     }
+
+    return 0;
 }
 
-console.log(answer);
+quiz.forEach((e) => console.log(binarySearch(arr, e)));
+
