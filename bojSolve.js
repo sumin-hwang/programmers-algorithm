@@ -27,33 +27,20 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, C] = input.shift().split(" ").map(Number);
-let arr = input.map(Number);
-arr = arr.sort((a,b) => a - b);
-let answer = 0;
+const N = Number(input.shift());
 
-let start = 0;
-let end = arr[arr.length - 1] - arr[0];
+let count = 0;
+let total = N;
 
-while(start <= end){
-    let mid = parseInt((start + end + 1)/ 2); //임의의 공유기 최소 거리
-    let count = 1;
-    let last = arr[0];
-
-    for(let i =0; i < N; i++){
-        if(arr[i] - last >= mid){
-            last = arr[i];
-            count++;
-        }
+while(total >= 0){
+    if(total%5=== 0){
+        total += count/5;
+        console.log(count);
+        return;
     }
 
-    if(count >= C){
-        answer = mid;
-        start = mid + 1;
-    }else{
-        end = mid - 1;
-    }
-
+    total -=3;
+    count++;
 }
 
-console.log(answer);
+console.log(-1);
