@@ -27,20 +27,15 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const T = Number(input[0]);
-const dp = new Array(12).fill(0);
+const N = Number(input.shift());
+const dp = new Array(N + 1).fill(0);
 
 dp[1] = 1;
 dp[2] = 2;
-dp[3] = 4;
 
-for(let i =4; i <= 10; i++){
-    dp[i] = dp[i - 1] + dp[i - 2 ] + dp[i - 3];
+for(let i =3; i <= N; i++){
+    dp[i] = dp[i - 1] + dp[i - 2];
 }
 
-let result = [];
-for(let i =1; i <= T; i++){
-    result.push(dp[Number(input[i])]);
-}
+console.log(dp[N]);
 
-result.map(c => console.log(c));
