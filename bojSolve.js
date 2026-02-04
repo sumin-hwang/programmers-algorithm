@@ -28,20 +28,19 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const T = Number(input[0]);
-const dp = Array.from({length : 41}, () => [0, 0]);
+const dp = new Array(12).fill(0);
 
-dp[0] = [1, 0];
-dp[1] = [0, 1];
+dp[1] = 1;
+dp[2] = 2;
+dp[3] = 4;
 
-for(let i =2; i <=40; i++){
-    dp[i][0] = dp[i -2][0] + dp[i - 1][0];
-    dp[i][1] = dp[i - 1][1] + dp[i - 2][1];
+for(let i =4; i <= 10; i++){
+    dp[i] = dp[i - 1] + dp[i - 2 ] + dp[i - 3];
 }
 
-let result = "";
-for(let i = 1; i <= T; i++){
-    const n = Number(input[i]);
-    result += dp[n][0].toString() +" " +  dp[n][1].toString() + "\n";
+let result = [];
+for(let i =1; i <= T; i++){
+    result.push(dp[Number(input[i])]);
 }
 
-console.log(result.trim());
+result.map(c => console.log(c));
