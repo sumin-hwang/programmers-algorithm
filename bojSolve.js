@@ -28,14 +28,15 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-const dp = new Array(N + 1).fill(0);
+const steps = input.map(Number);
+let dp = new Array(N).fill(0);
 
-dp[1] = 1;
-dp[2] = 2;
+dp[0] = steps[0];
+dp[1] = steps[0] + steps[1];
+dp[2] = steps[2] + Math.max(steps[0], steps[1]);
 
-for(let i =3; i <= N; i++){
-    dp[i] = dp[i - 1] + dp[i - 2];
+for(let i =3; i<=N; i++){
+    dp[i] = Math.max(dp[i - 2] + steps[i], dp[i - 3] + steps[i - 1] + steps[i]);
 }
 
-console.log(dp[N]);
-
+console.log(dp[N-1]);
