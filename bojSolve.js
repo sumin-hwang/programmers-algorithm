@@ -27,16 +27,13 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = Number(input.shift());
-const steps = input.map(Number);
-let dp = new Array(N).fill(0);
+const [N, ...homes] = input.map(c => c.split(" ").map(Number));
+const dp = homes;
 
-dp[0] = steps[0];
-dp[1] = steps[0] + steps[1];
-dp[2] = steps[2] + Math.max(steps[0], steps[1]);
-
-for(let i =3; i<=N; i++){
-    dp[i] = Math.max(dp[i - 2] + steps[i], dp[i - 3] + steps[i - 1] + steps[i]);
+for(let i = 1; i < N; i++){
+    dp[i][0] = dp[i][0] + Math.min(dp[i-1][1], dp[i-1][2]);
+    dp[i][1] = dp[i][1] + Math.min(dp[i - 1][0], dp[i - 1][2]);
+    dp[i][2] = dp[i][2] + Math.min(dp[i - 1][0], dp[i - 1][1]);
 }
 
-console.log(dp[N-1]);
+console.log(Math.min(...dp[N - 1]));
