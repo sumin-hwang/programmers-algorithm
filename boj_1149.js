@@ -1,4 +1,3 @@
-
 const [N, ...homes] = input.map(c => c.split(" ").map(Number));
 const dp = homes;
 

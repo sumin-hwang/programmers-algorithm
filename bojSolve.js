@@ -28,25 +28,15 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-const tri = input.map(c => c.split(" ").map(Number));
+const arr = input[0].split(" ").map(Number);
 
-var dp = tri;
+const dp = new Array(N).fill(1);
 
-dp[1][0] += dp[0][0];
-dp[1][1] += dp[0][0];
-
-for(let i =2; i < N ; i++){
-    for(let j = 0; j <= i; j++){
-        if (j === 0){
-            dp[i][j] += dp[i-1][j];
-        }else if (j === i){
-            dp[i][j] = dp[i-1][j-1];
-        }else{
-            console.log(i, j);
-            dp[i][j] = dp[i][j] + Math.max(dp[i - 1][j- 1], dp[i - 1][j]);
+for(let i = 1; i <= N; i++){
+    for(let j = 0; j < i; j++){
+        if(arr[i] > arr[j]){
+            dp[i] = Math.max(dp[i], dp[j] + 1);
         }
-        
     }
 }
-
-console.log(Math.max(...dp[N - 1]));
+console.log(Math.max(...dp));
