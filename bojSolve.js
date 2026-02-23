@@ -28,25 +28,17 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-let answer = [];
-for(let i =0; i < N; i++){
-    let temp = Number(input[i]);
-    console.log(dp(temp)); 
-}
+const nums = input[0].split(" ").map(Number);
 
-function dp (num){
-    const dp = new Array(101).fill(1);
-    dp[4] = 2;
-    dp[5] = 2;
-    dp[6] = 3;
+const dp = new Array(N).fill(0);
+dp[0] = nums[0];
 
-    if(num < 7){
-        return dp[num];
-    }else{
-        for(let i = 7; i <= num; i++){
-            dp[i] = dp[i - 1] + dp[i - 5];
-        }
-
-        return dp[num];
+for(let i = 1; i < N; i++){
+    if(dp[i - 1] < 0 ){
+        dp[i] = nums[i];
+        continue;
     }
+    dp[i] = dp[i - 1] + nums[i];
 }
+
+console.log(Math.max(...dp));
