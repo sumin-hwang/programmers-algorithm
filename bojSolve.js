@@ -30,19 +30,26 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-const arr = input.map(Number);
-const dp = new Array(N).fill(0);
+const dp = Array.from({length : N + 1}, () => Array(10).fill(0));
 
-if (N >= 1) dp[0] = arr[0];
-if (N >= 2) dp[1] = arr[0] + arr[1];
-if (N >= 3) dp[2] = Math.max(
-    arr[0] + arr[1],
-    arr[0] + arr[2],
-    arr[1] + arr[2]
-);
+//dp[i][j] 길이가 i 마지막 자리가 j인 계단수의 갯수
+const MOD = 1000000000;
 
-for(let i = 3; i < N; i++){
-    dp[i] = Math.max(dp[i - 1], arr[i] + dp[i -2], arr[i] + dp[i - 3] + arr[i -1]);
+for(let i = 1; i <= 9; i++){
+    dp[1][i] = 1;
 }
 
-console.log(Math.max(...dp));
+for(let i = 2; i <= N; i++){
+    for(let j =0; j <= 9; j++){
+        if(j === 0){
+            dp[i][j] = dp[i-1][1] %MOD;
+        }else if (j === 9){
+            dp[i][j] = dp[i-1][8] %MOD;
+        }else{
+            dp[i][j] = (dp[i-1][j+1] + dp[i-1][j-1]) %MOD;
+        }
+    }
+}
+
+let result = dp[N].reduce((sum, cur) => (sum + cur)%MOD, 0);
+console.log(result);
