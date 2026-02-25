@@ -30,26 +30,24 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-const dp = Array.from({length : N + 1}, () => Array(10).fill(0));
+const dp = new Array(N + 1).fill(0);
+const T = [];
+const P = [];
 
-//dp[i][j] 길이가 i 마지막 자리가 j인 계단수의 갯수
-const MOD = 1000000000;
-
-for(let i = 1; i <= 9; i++){
-    dp[1][i] = 1;
+for(let i =0; i < N; i++){
+    let [t, p] = input[i].split(" ").map(Number);
+    T.push(t);
+    P.push(p);
 }
 
-for(let i = 2; i <= N; i++){
-    for(let j =0; j <= 9; j++){
-        if(j === 0){
-            dp[i][j] = dp[i-1][1] %MOD;
-        }else if (j === 9){
-            dp[i][j] = dp[i-1][8] %MOD;
-        }else{
-            dp[i][j] = (dp[i-1][j+1] + dp[i-1][j-1]) %MOD;
-        }
+for(let i = N-1; i >=0; i--){
+    const nextDay = i + T[i]; //상담 끝나는 날
+
+    if(nextDay <= N){
+        dp[i] = Math.max(dp[i + 1], P[i] + dp[nextDay]);
+    }else{
+        dp[i] = dp[i + 1];
     }
 }
 
-let result = dp[N].reduce((sum, cur) => (sum + cur)%MOD, 0);
-console.log(result);
+console.log(dp[0]);
