@@ -30,14 +30,27 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, K] = input.shift().split(" ").map(Number);
-let arr = Array.from({ length: N }, (_, i) => i + 1);
-let answer = [];
-let idx = 0;
+const N = Number(input.shift());
 
-while(arr.length > 0){
-    idx = (idx + K - 1)%arr.length;
-    answer.push(arr.splice(idx, 1)[0]);
+let answer = [];
+
+for(let i =0; i < N; i++){
+    const arr = [];
+    const str = input[i].trim();
+
+    for(let j =0; j < str.length; j++){
+        if(str[j] === '('){
+            arr.push('(');
+        }else if (str[j] === ')' && arr.length > 0){
+            arr.pop();
+        }else if ( str[j] === ')' && arr.length === 0){
+            answer.push('NO');
+            break;
+        }
+    }
+
+    arr.length > 0 ? answer.push('NO') : answer.push('YES');
+
 }
 
-console.log("<" + answer.join(", ") + ">");
+answer.map(c=> console.log(c));
