@@ -14,11 +14,3 @@ while(head <queue.length - 1){
 }
 
 console.log(queue[head]);
-
-1 2 3 4 5 6 
-
-1, 1234561
-2, 12345612
-3, 123456123
-4, 1234561234
-

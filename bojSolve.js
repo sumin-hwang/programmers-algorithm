@@ -31,18 +31,12 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-const queue = [];
+const arr = new Array(10000);
+const tail = 5000;
+const head = 5000;
 
-for(let i = N; i >= 1; i--){
-    queue[i-1] = i;
+for(let i =0; i < N; i++){
+    const [str, num] = input[i].trim().split(" ");
+
+    console.log(str, num );
 }
-
-let head = 0;
-
-while(head <queue.length - 1){
-    head++;
-    queue.push(queue[head]);
-    head++;
-}
-
-console.log(queue[head]);
