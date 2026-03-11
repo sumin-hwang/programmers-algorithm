@@ -31,26 +31,18 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
+const queue = [];
 
-let answer = [];
-
-for(let i =0; i < N; i++){
-    const arr = [];
-    const str = input[i].trim();
-
-    for(let j =0; j < str.length; j++){
-        if(str[j] === '('){
-            arr.push('(');
-        }else if (str[j] === ')' && arr.length > 0){
-            arr.pop();
-        }else if ( str[j] === ')' && arr.length === 0){
-            answer.push('NO');
-            break;
-        }
-    }
-
-    arr.length > 0 ? answer.push('NO') : answer.push('YES');
-
+for(let i = N; i >= 1; i--){
+    queue[i-1] = i;
 }
 
-answer.map(c=> console.log(c));
+let head = 0;
+
+while(head <queue.length - 1){
+    head++;
+    queue.push(queue[head]);
+    head++;
+}
+
+console.log(queue[head]);
