@@ -31,12 +31,23 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const N = Number(input.shift());
-const arr = new Array(10000);
-const tail = 5000;
-const head = 5000;
+const str = input.shift().trim();
+const nums = input.map(Number);
 
-for(let i =0; i < N; i++){
-    const [str, num] = input[i].trim().split(" ");
+const stack = [];
 
-    console.log(str, num );
+for(let char of str){
+  if(char >= 'A' && char <= 'Z'){
+    stack.push(nums[char.charCodeAt(0) - 65]);
+  }else{
+    const b = stack.pop();
+    const a = stack.pop();
+
+    if (char === '+') stack.push(a + b);
+    else if (char === '-') stack.push( a - b);
+    else if (char === '/') stack.push(a / b);
+    else if (char === '*') stack.push(a * b);
+  }
 }
+
+console.log(stack[0].toFixed(2));
