@@ -30,18 +30,24 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const str = input.shift();
-let answer = 0;
+const N = input.shift();
+const queue = input[0].split(" ").map((v, i) => [i + 1, Number(v)]);
 
-const stack = [];
+let answer = [];
+let idx = 0;
 
-for(let each of str){
-  if(each === '('){
-    stack.push('(');
-  }else if (each === ')' && stack.length > 0 ){
-    stack.pop();
-    answer++;
+while(queue.length){
+  let [num, move] = queue.splice(idx,1)[0];
+  answer.push(num);
+
+  if(queue.length === 0) break;
+
+  if(move > 0){
+    idx = (idx + move -1 )%queue.length;
+  }else {
+    idx = (idx + move) %queue.length;
+    if(idx < 0) idx += queue.length;
   }
 }
 
-console.log(answer);
+console.log(answer.join(" "));
