@@ -2,10 +2,6 @@
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 // const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
 
-const { fileURLToPath } = require('url');
-const { inflate } = require('zlib');
-
-
 
 // const input = require("fs")
 //  .readFileSync("/dev/stdin")
@@ -30,24 +26,32 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = input.shift();
-const queue = input[0].split(" ").map((v, i) => [i + 1, Number(v)]);
-
-let answer = [];
 let idx = 0;
+let answer = [];
 
-while(queue.length){
-  let [num, move] = queue.splice(idx,1)[0];
-  answer.push(num);
+for(let line of input){
+  if(line === ".") break;
 
-  if(queue.length === 0) break;
+  let stack = [];
+  let isValid = true;
 
-  if(move > 0){
-    idx = (idx + move -1 )%queue.length;
-  }else {
-    idx = (idx + move) %queue.length;
-    if(idx < 0) idx += queue.length;
+  for(let ch of line){
+    if(ch === "(" || ch === "["){
+      stack.push(ch);
+    }else if (ch === ")"){
+      if(stack.pop() !== "("){
+        isValid = false;
+        break;
+      }
+    }else if (ch === "]"){
+      if(stack.pop() !== "["){
+        isValid = false;
+        break;
+      }
+    }
   }
-}
 
-console.log(answer.join(" "));
+  if(stack.length !== 0) isValid = false;
+
+  console.log(isValid ? "yes" : "no");
+}
