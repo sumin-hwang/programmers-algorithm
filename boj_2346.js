@@ -1,22 +1,49 @@
+const fs = require('fs');
+const input = fs.readFileSync(0, 'utf-8').trim().split('\n');
 
-const N = input.shift();
-const queue = input[0].split(" ").map((v, i) => [i + 1, Number(v)]);
+const N = Number(input[0]);
+const arr = input[1].split(' ').map(Number);
 
-let answer = [];
-let idx = 0;
+// 1-indexed
+let left = Array(N + 1);
+let right = Array(N + 1);
 
-while(queue.length){
-  let [num, move] = queue.splice(idx,1)[0];
-  answer.push(num);
+// 연결 리스트 구성
+for (let i = 1; i <= N; i++) {
+  left[i] = i === 1 ? N : i - 1;
+  right[i] = i === N ? 1 : i + 1;
+}
 
-  if(queue.length === 0) break;
+let result = [];
+let cur = 1;
 
-  if(move > 0){
-    idx = (idx + move -1 )%queue.length;
-  }else {
-    idx = (idx + move) %queue.length;
-    if(idx < 0) idx += queue.length;
+for (let i = 0; i < N; i++) {
+  result.push(cur);
+  let move = arr[cur - 1];
+
+  // 현재 풍선 제거
+  let l = left[cur];
+  let r = right[cur];
+
+  right[l] = r;
+  left[r] = l;
+
+  if (i === N - 1) break;
+
+  // 이동
+  if (move > 0) {
+    let next = r;
+    for (let j = 1; j < move; j++) {
+      next = right[next];
+    }
+    cur = next;
+  } else {
+    let next = l;
+    for (let j = 0; j < Math.abs(move); j++) {
+      next = left[next];
+    }
+    cur = next;
   }
 }
 
-console.log(answer.join(" "));
+console.log(result.join(' '));
