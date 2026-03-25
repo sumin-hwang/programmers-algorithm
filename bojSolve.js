@@ -26,32 +26,24 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-let idx = 0;
-let answer = [];
+const [N, M] = input[0].split(" ").map(Number);
+const card = input[1].split(" ").map(Number);
+let arr = Array(N);
+for(let i =0; i < N; i++){
+  arr[i] = i + 1;
+}
 
-for(let line of input){
-  if(line === ".") break;
+console.log(arr);
 
-  let stack = [];
-  let isValid = true;
+let count = 0;
 
-  for(let ch of line){
-    if(ch === "(" || ch === "["){
-      stack.push(ch);
-    }else if (ch === ")"){
-      if(stack.pop() !== "("){
-        isValid = false;
-        break;
-      }
-    }else if (ch === "]"){
-      if(stack.pop() !== "["){
-        isValid = false;
-        break;
-      }
-    }
+for(let i =0; i < M; i++){
+  let left = Array(N);
+  let right = Array(N);
+
+  for(let j = 0; j < N; j++){
+    
   }
 
-  if(stack.length !== 0) isValid = false;
 
-  console.log(isValid ? "yes" : "no");
 }
