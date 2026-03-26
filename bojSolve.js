@@ -29,21 +29,30 @@ let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\p
 const [N, M] = input[0].split(" ").map(Number);
 const card = input[1].split(" ").map(Number);
 let arr = Array(N);
+
 for(let i =0; i < N; i++){
   arr[i] = i + 1;
 }
 
-console.log(arr);
 
-let count = 0;
 
-for(let i =0; i < M; i++){
-  let left = Array(N);
-  let right = Array(N);
+for(let target of card){
+  let idx = arr.indexOf(target);
 
-  for(let j = 0; j < N; j++){
-    
+  if(idx <= arr.length / 2){
+    while(arr[0] !== target){
+      arr.push(arr.shift());
+      count++;
+    }
+  }
+  else{
+    while(arr[0] !== target){
+      arr.unshift(arr.pop());
+      count++;
+    }
   }
 
-
+  arr.shift();
 }
+
+console.log(count);
