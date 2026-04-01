@@ -26,33 +26,28 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const [N, M] = input[0].split(" ").map(Number);
-const card = input[1].split(" ").map(Number);
-let arr = Array(N);
+const N = Number(input.shift());
+const skills = input[0].split(" ").map(Number);
 
-for(let i =0; i < N; i++){
-  arr[i] = i + 1;
+const deque = new Array(N * 2);
+let front = N;
+let back = N;
+
+
+for (let i = N - 1; i >= 0; i--) {
+  const skill = skills[i];
+  const card = N - i;
+
+  if (skill === 1) {
+    deque[--front] = card;
+  } else if (skill === 2) {
+    // 첫 번째 빼서 뒤로 밀기
+    const first = deque[front];
+    deque[front] = card;
+    deque[--front] = first;
+  } else if (skill === 3) {
+    deque[back++] = card;
+  }
 }
 
-
-
-for(let target of card){
-  let idx = arr.indexOf(target);
-
-  if(idx <= arr.length / 2){
-    while(arr[0] !== target){
-      arr.push(arr.shift());
-      count++;
-    }
-  }
-  else{
-    while(arr[0] !== target){
-      arr.unshift(arr.pop());
-      count++;
-    }
-  }
-
-  arr.shift();
-}
-
-console.log(count);
+console.log(deque.slice(front, back).join(' '));
