@@ -26,28 +26,36 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const N = Number(input.shift());
-const skills = input[0].split(" ").map(Number);
+const str = input[0];
+let answer = 1;
+let stack = [];
 
-const deque = new Array(N * 2);
-let front = N;
-let back = N;
-
-
-for (let i = N - 1; i >= 0; i--) {
-  const skill = skills[i];
-  const card = N - i;
-
-  if (skill === 1) {
-    deque[--front] = card;
-  } else if (skill === 2) {
-    // 첫 번째 빼서 뒤로 밀기
-    const first = deque[front];
-    deque[front] = card;
-    deque[--front] = first;
-  } else if (skill === 3) {
-    deque[back++] = card;
+for(let ch of str){
+  if(ch === '('){
+    stack.push(ch);
+  }else if (ch === ')'){
+    if(stack[stack.length-1] === '('){
+      stack.pop();
+      answer = answer*2;
+    }else if (stack.length === 0){
+      answer = answer *0;
+      break;
+    }else{
+      stack.push(ch);''
+    }
+  }else if (ch === '['){
+    stack.push(ch);
+  }else if (ch === ']'){
+    if(stack[stack.length-1] === '[(]'){
+      stack.pop();
+      answer = answer*3;
+    }else if (stack.length === 0){
+      answer = answer *0;
+      break;
+    }else{
+      stack.push(ch);''
+    }
   }
 }
 
-console.log(deque.slice(front, back).join(' '));
+console.log(answer);
