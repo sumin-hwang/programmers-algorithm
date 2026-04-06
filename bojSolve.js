@@ -26,36 +26,42 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const str = input[0];
-let answer = 1;
-let stack = [];
+const T = Number(input.shift());
 
-for(let ch of str){
-  if(ch === '('){
-    stack.push(ch);
-  }else if (ch === ')'){
-    if(stack[stack.length-1] === '('){
-      stack.pop();
-      answer = answer*2;
-    }else if (stack.length === 0){
-      answer = answer *0;
-      break;
-    }else{
-      stack.push(ch);''
-    }
-  }else if (ch === '['){
-    stack.push(ch);
-  }else if (ch === ']'){
-    if(stack[stack.length-1] === '[(]'){
-      stack.pop();
-      answer = answer*3;
-    }else if (stack.length === 0){
-      answer = answer *0;
-      break;
-    }else{
-      stack.push(ch);''
-    }
-  }
+for(let i =0; i <T*3; i = i + 3){
+  let order = input[i];
+  let length = input[i + 1];
+  let arr = JSON.parse(input[i + 2]);
+
+  console.log(calc(order, arr));
+
 }
 
-console.log(answer);
+function calc(order, arr){
+  let front = 0;
+  let back = arr.length - 1;
+  
+  let isReverse = false;
+
+  for(let ch of order){
+
+    if(ch === 'R'){
+      isReverse = !isReverse;
+    }else if (ch === 'D'){
+      if(front > back){
+        return 'error';
+      }else{
+        if(isReverse){
+          back--;
+        }else {
+          front++;
+        }
+      }
+    }
+  }
+
+  let result = arr.slice(front, back + 1);
+  if(isReverse) result.reverse();
+
+  return JSON.stringify(result);
+}
