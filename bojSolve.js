@@ -26,42 +26,25 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const T = Number(input.shift());
+const [N, M] = input.shift().split(" ").map(Number);
+const NumMap = new Map();
+const NameMap = new Map();
+let answer = [];
 
-for(let i =0; i <T*3; i = i + 3){
-  let order = input[i];
-  let length = input[i + 1];
-  let arr = JSON.parse(input[i + 2]);
-
-  console.log(calc(order, arr));
-
+for(let i= 0; i < N; i++){
+  NumMap.set(i + 1, input[i].trim());
+  NameMap.set(input[i].trim(), i + 1);
 }
 
-function calc(order, arr){
-  let front = 0;
-  let back = arr.length - 1;
-  
-  let isReverse = false;
 
-  for(let ch of order){
+for(let i = N; i < N + M; i++){
+  let quiz = input[i].trim();
 
-    if(ch === 'R'){
-      isReverse = !isReverse;
-    }else if (ch === 'D'){
-      if(front > back){
-        return 'error';
-      }else{
-        if(isReverse){
-          back--;
-        }else {
-          front++;
-        }
-      }
-    }
+  if(isNaN(quiz)){
+    console.log(NameMap.get(quiz));
+  }else{
+    console.log(NumMap.get(Number(quiz)));
   }
 
-  let result = arr.slice(front, back + 1);
-  if(isReverse) result.reverse();
-
-  return JSON.stringify(result);
+  
 }
