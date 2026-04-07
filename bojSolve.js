@@ -27,24 +27,18 @@ let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\pr
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
 const [N, M] = input.shift().split(" ").map(Number);
-const NumMap = new Map();
-const NameMap = new Map();
-let answer = [];
+const set = new Set();
+let ans = 0;
 
-for(let i= 0; i < N; i++){
-  NumMap.set(i + 1, input[i].trim());
-  NameMap.set(input[i].trim(), i + 1);
+for(let i=0; i < N; i++){
+  set.add(input[i].trim());
 }
-
 
 for(let i = N; i < N + M; i++){
-  let quiz = input[i].trim();
-
-  if(isNaN(quiz)){
-    console.log(NameMap.get(quiz));
-  }else{
-    console.log(NumMap.get(Number(quiz)));
+  if(set.has(input[i].trim())){
+    ans++;
   }
-
-  
 }
+
+console.log(ans);
+
