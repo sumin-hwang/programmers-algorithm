@@ -28,29 +28,30 @@ let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\al
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
 let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
 
-const map = new Map();
-let total = 0;
+const S = input;
+const N = S.length;
+const set = new Set();
 
-for(let tree of input){
-  tree = tree.trim();
-  if(!map.has(tree)){
-    map.set(tree, 1);
-  }else if (tree ==""){
-    continue;
-  } else {
-    map.set(tree, map.get(tree) + 1)
+function dfs(l, r, str) {
+  if (str.length === N) {
+    set.add(str);
+    return;
   }
-  total++;
-    
+
+  // 왼쪽 확장
+  if (l > 0) {
+    dfs(l - 1, r, S[l - 1] + str);
+  }
+
+  // 오른쪽 확장
+  if (r < N - 1) {
+    dfs(l, r + 1, str + S[r + 1]);
+  }
 }
 
-let length = map.size;
-
-const sorted = [...map].sort((a,b) => {
-  return a[0].localeCompare(b[0]);
-})
-
-for(const [key, value] of sorted){
-  console.log(key, (value/total * 100).toFixed(4));
+// 모든 시작점
+for (let i = 0; i < N; i++) {
+  dfs(i, i, S[i]);
 }
 
+console.log(set.size);
