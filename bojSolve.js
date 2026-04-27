@@ -2,9 +2,6 @@
 // let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 // const input = require("fs").readFileSync("/dev/stdin", "utf-8").trim().split("\n");
 
-const { setMaxIdleHTTPParsers } = require('http');
-
-
 // const input = require("fs")
 //  .readFileSync("/dev/stdin")
 //   .toString()
@@ -22,36 +19,30 @@ const { setMaxIdleHTTPParsers } = require('http');
 // const a = require("fs").readFileSync("/dev/stdin")
 
 //배열을 받아서 숫자로 저장하기
-let inputNumberNL =require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => Number(c));
-let inputStringNL = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
-let inputSpaceNumber = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split(' ').map(c => Number(c));
 let input = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().trim().split('\n');
-let input1 = require('fs').readFileSync('C:\\Users\\hsm95\\vscode_\\algorithm\\programmers-algorithm\\example.txt').toString().split('\n').map(c => c.split(" ").map(c => Number(c)));
+const n = Number(input[0]);
+const parents = input[1].split(" ").map(Number);
+const removeNode = Number(input[2]);
 
-const S = input;
-const N = S.length;
-const set = new Set();
+const arr = input.map(Number);
+let result = [];
 
-function dfs(l, r, str) {
-  if (str.length === N) {
-    set.add(str);
-    return;
+function postOrder(start, end){
+  
+  if(start > end) return;
+
+  const root = arr[start];
+  let pivot = start + 1;
+
+  while(pivot <= end && input[pivot] < root){
+    pivot++;
   }
 
-  // 왼쪽 확장
-  if (l > 0) {
-    dfs(l - 1, r, S[l - 1] + str);
-  }
+  postOrder(start + 1, pivot -1);
+  postOrder(pivot, end);
 
-  // 오른쪽 확장
-  if (r < N - 1) {
-    dfs(l, r + 1, str + S[r + 1]);
-  }
+  console.log(root);
+
 }
 
-// 모든 시작점
-for (let i = 0; i < N; i++) {
-  dfs(i, i, S[i]);
-}
-
-console.log(set.size);
+postOrder(0, input.length - 1);
