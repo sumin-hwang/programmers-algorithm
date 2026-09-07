@@ -9,35 +9,32 @@ function solution(numbers) {
             return false;
         }
         
-        for(let i = 2; i * i <= num; i++){
-            if(num % i === 0){
+        for(let i =2; i*i <= num; i++){
+            if(num%i === 0){
                 return false;
             }
         }
-        
         return true;
     }
     
-    function dfs(current){
-        if(current.length > 0){
-            const num = Number(current);
-            
+    function dfs(curr){
+        if(curr.length > 0){
+            let num = Number(curr);
             if(isPrime(num)){
                 set.add(num);
             }
         }
         
-        for(let i =0; i < arr.length; i++){
-            if(visited[i]) continue;
-            
-            visited[i] = true;
-            dfs(current + arr[i]);
-            visited[i] = false;
+        for(let i=0; i < arr.length; i++){
+            if(!visited[i]){
+                visited[i] = true;
+                dfs(curr + arr[i]);
+                visited[i] = false;
+            }
         }
     }
     
     dfs('');
-    
     
     return set.size;
 }
