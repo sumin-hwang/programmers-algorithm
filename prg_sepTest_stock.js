@@ -1,0 +1,20 @@
+function solution(prices) {
+    var answer = [];
+    
+    for(let i= 0; i < prices.length; i++){
+        let time = 0;
+        
+        for(let j = i + 1; j < prices.length; j++){
+            time++;
+            
+            // 가격이 떨어지면 탐색종료
+            if(prices[i] > prices[j]){
+                break;
+            }
+        }
+        
+        answer.push(time);
+    }
+    
+    return answer;
+}
